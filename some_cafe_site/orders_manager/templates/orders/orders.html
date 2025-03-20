@@ -1,0 +1,134 @@
+{% extends "cafe/index.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href={% static "orders/css/orders.css" %}>
+    <link rel="stylesheet" href={% static "orders/css/order_form.css" %}>
+    <link rel="stylesheet" href={% static "orders/css/orders_controls.css" %}>
+    {#  Медиа для ModelSelect2MultipleWidget  #}
+    {{ form.media }}
+{% endblock head %}
+
+{% block body %}
+    <header>
+        <h1>Заказы в кафе</h1>
+    </header>
+
+    <main>
+        <form id="order_filter" name="order_filter_form" class="controls" action="/orders/">
+            {% csrf_token %}
+            {{ filter_form.table_number }}
+            <a class="button" href="#add_order">Добавить заказ</a>
+            <a class="button" href="#delete_order">Удалить заказ</a>
+            <div class="status-filter">
+                <label for="{{ filter_form.status.id_for_label }}">{{ filter_form.status.label }}</label>
+                {{ filter_form.status }}
+            </div>
+        </form>
+        <section class="hall">
+            {% for order in orders %}
+                <div class="place">
+                    <div class="chair chair-left"></div>
+                    <div class="table">
+                        <div class="numbers">
+                            <p class="order-id">ID{{ order.id }}</p>
+                            <p class="tnumber">{{ order.table_number }}</p>
+                            <a class="ring" href="{% url 'delete_order' order.id %}"></a>
+                        </div>
+                        <div class="receipt">
+                            <table>
+                                <tbody id="orders-list">
+                                {% for order_item in order.orderitem_set.all %}
+                                    <tr class="rtr">
+                                        <td class="dish">{{ order_item.item.dish|truncatechars:20 }}</td>
+                                        <td class="quant">{{ order_item.quantity }}</td>
+                                        <td class="multy">×</td>
+                                        <td class="price">{{ order_item.item.price }}$</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <p>Итого: {{ order.total_price }}$</p>
+                        </div>
+                        <p class="status">{{ order.get_status_display }}</p>
+                    </div>
+                    <div class="chair chair-right"></div>
+                </div>
+            {% endfor %}
+        </section>
+        {#        <section class="">#}
+        {#        #}
+        {#        </section>#}
+    </main>
+
+    <footer>
+        <p>© 2025 Cool Café. All rights reserved.</p>
+    </footer>
+
+    {#  Модальное окно добавления заказа #}
+    <div id="add_order" class="overlay">
+        <form class="popup" method="post" action="/orders/">
+            {% csrf_token %}
+            {% for field in form %}
+                <p><label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <small class="error">{{ field.errors.0 }}</small>
+                {% endif %}
+            {% endfor %}
+            <a class="close" href="">&times;</a>
+            <p>
+                <button name="add_order_form" type="submit">Сделать заказ</button>
+        </form>
+    </div>
+
+    {% if edit_from %}
+        <div id="edit_order" class="overlay">
+            <form class="popup" method="post" action="/orders/">
+                {% csrf_token %}
+                {% for field in edit_from %}
+                    <p><label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <small class="error">{{ field.errors.0 }}</small>
+                    {% endif %}
+                {% endfor %}
+                <a class="close" href="">&times;</a>
+                <p>
+                    <button name="edit_order_form" type="submit">Сделать заказ</button>
+            </form>
+        </div>
+    {% endif %}
+
+    <div id="delete_order" class="overlay">
+        <form class="popup" method="post" action="/orders/#delete_order">
+            {% csrf_token %}
+            <label for="{{ delete_form.order_id.id_for_label }}">{{ delete_form.order_id.label }}</label>
+            {{ delete_form.order_id }}
+            <a class="close" href="">&times;</a>
+            {% if delete_form.order_id.errors %}
+                <small class="error">{{ delete_form.order_id.errors.0 }}</small>
+            {% endif %}
+            {% if messages %}
+                {% for message in messages %}
+                    <small class="success">{{ message }}</small>
+                {% endfor %}
+            {% endif %}
+            <p>
+                <button name="delete_order_form" type="submit">Удалить</button>
+        </form>
+    </div>
+    <script src="{% static "orders/js/filter_trigger.js" %}"></script>
+    {#  Скрипты для ModelSelect2MultipleWidget  #}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    {{ form.media.js }}
+    <script>
+        var items = JSON.parse('{{ items_json|safe }}');
+        // Счётчик количества
+        var counters = {};
+    </script>
+    <script src="{% static "orders/js/select2modify.js" %}"></script>
+
+
+
+{% endblock body %}

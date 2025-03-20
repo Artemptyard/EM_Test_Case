@@ -1,0 +1,63 @@
+main {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    min-height: calc(100vh - 210px);
+}
+
+.controls {
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: row wrap;
+    background: #4d4d4d;
+    padding: 10px 10%;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.controls input, .controls select, .controls a {
+    padding: 8px;
+    font-size: 16px;
+}
+
+.controls input, .controls .button {
+    font-family: Arial, sans-serif;
+    color: #1b1b1b;
+    min-width: 230px;
+}
+.controls .button {
+    /*display: block;*/
+    text-align: center;
+    cursor: pointer;
+
+    margin: auto;
+    padding: 11px;
+    text-decoration: none;
+    background-color: whitesmoke;
+}
+
+.controls .button:hover {
+    background-color: #a4a4a4;
+}
+
+.status-filter {
+    display: flex;
+    flex-direction: row;
+    background-color: #f9f9f9;
+}
+
+.controls select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease-in-out;
+    border-left: solid 0 #f9f9f9;
+}
+
+.controls label {
+    display: block;
+    text-align: center;
+    margin: auto 10px;
+    color: #333;
+}

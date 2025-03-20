@@ -1,0 +1,107 @@
+/* Стиль оформления модального окна для добавления заказов */
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 2;
+}
+
+.overlay:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    transition: all 5s ease-in-out;
+}
+
+.popup .close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+
+/* Стиль для формы */
+.popup label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.popup input[type="number"], .popup select, .popup textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.popup select {
+    width: 95%;
+}
+
+.popup input[type="number"] {
+    width: 90%;
+    margin-bottom: 0;
+}
+
+.popup input:focus, .popup select:focus, .popup textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.popup input[type="checkbox"], .popup input[type="radio"] {
+    width: auto;
+    margin-right: 5px;
+}
+
+.popup button {
+    display: block;
+    width: 95%;
+    background: #007bff;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.popup button:hover {
+    background: #0056b3;
+}
+
+.popup .error {
+    color: red;
+}
+
+.popup .success {
+    color: green;
+}
+
+.popup #id_items {
+    margin-bottom: 30px;
+}

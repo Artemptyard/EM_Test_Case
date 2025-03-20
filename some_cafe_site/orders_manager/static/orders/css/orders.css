@@ -1,0 +1,199 @@
+/*main {*/
+/*    z-index: -4;*/
+/*}*/
+
+.status {
+    font-weight: bold;
+    text-transform: capitalize;
+     -webkit-text-stroke: 1px #9f8555;
+    letter-spacing: 1px;
+}
+
+.status.waiting {
+    color: orange;
+}
+
+.status.ready {
+    color: blue;
+}
+
+.status.paid {
+    color: green;
+}
+
+.hall {
+    background-image: url("../imgs/floor.jpg");
+    background-size: 300px;
+    background-position: center;
+    border: solid 10px #363636;
+    border-right: 0;
+    border-left: 0;
+    /*z-index: -2;*/
+}
+
+.hall {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    row-gap: 50px;
+    column-gap: 20px;
+    min-height: calc(100vh - 327px);
+    margin: auto 0;
+    padding: 20px 20px;
+}
+
+.place {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row nowrap;
+    align-content: center;
+    justify-content: space-around;
+    align-items: center;
+    width: auto;
+    /*min-width: 200px;*/
+    margin: 0;
+}
+
+.chair {
+    background-image: url("../imgs/chair-shadow.png");
+    background-size: cover;
+    background-position: center;
+    width: 120px;
+    height: 100px;
+    /*z-index: -1;*/
+}
+
+.chair-left {
+    transform: rotate(-90deg);
+    margin-right: -15px;
+}
+
+.chair-right {
+    transform: rotate(90deg);
+    margin-left: -15px;
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: flex-start;
+    width: 250px;
+    min-height: 200px;
+
+    padding: 0 40px;
+
+    background-image: url("../imgs/table.jpg");
+    background-size: contain;
+    background-position: center;
+    border: 1px solid black;
+    color: wheat;
+    border-radius: 100px;
+    z-index: 1;
+}
+
+.table .numbers {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    margin: 10px 0 5px 0;
+}
+
+.table .tnumber {
+    background-color: gold;
+    color: #222;
+    text-align: center;
+    font-weight: bold;
+    text-shadow:
+        4px 4px 5px rgba(0, 0, 0, 0.3),
+        -3px -3px 5px rgba(255, 255, 255, 0.6);
+
+    width: 40px;
+    margin: auto;
+
+    border: 1px solid goldenrod;
+    border-radius: 5px;
+}
+
+.table .order-id {
+    /*position: absolute;*/
+    /*left: 25px;*/
+    background-color: transparent;
+    color: #ffffff;
+
+    width: 35px;
+    margin: auto;
+    vertical-align: center;
+
+    border: 1px solid #fcfcfc;
+    border-radius: 5px;
+}
+
+.table .ring {
+    display: block;
+    background-image: url("../imgs/ring.png");
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+    margin: auto;
+    text-decoration: none;
+}
+
+.table .ring:hover {
+    background-image: url("../imgs/light-ring.png");
+}
+
+.table .ring::after {
+    content: "Изменить заказ";
+    position: absolute;
+    background: #000;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    bottom: 100%;
+    left: 82%;
+    transform: translateX(-50%);
+
+    visibility: hidden;
+}
+
+.table .ring:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+.table .receipt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    padding-top: 10px;
+    width: 100%;
+
+    background: #dad7d5;
+    border: 1px solid black;
+    color: black;
+    border-radius: 2px;
+}
+
+.rtr .dish {
+    text-align: left;
+}
+
+.rtr .multy, .rtr .quant {
+    width: 5px;
+}
+
+.rtr .price {
+    text-align: left;
+}
+
+.rtr td {
+    border-bottom: solid 1px black;
+}

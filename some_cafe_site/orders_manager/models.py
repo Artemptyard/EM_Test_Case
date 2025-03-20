@@ -3,9 +3,9 @@ from django.db import models
 
 class OrderStatuses(models.TextChoices):
     """Статусы заказа"""
-    WAITING = 'waiting', 'в ожидании'
-    READY = 'ready', 'готов'
-    PAID = 'paid', 'оплачено'
+    WAITING = 'waiting', 'В ожидании'
+    READY = 'ready', 'Готово'
+    PAID = 'paid', 'Оплачено'
 
 
 class Item(models.Model):
@@ -15,7 +15,7 @@ class Item(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return self.dish
+        return f"{self.dish} - {self.price}$"
 
 
 class Order(models.Model):
