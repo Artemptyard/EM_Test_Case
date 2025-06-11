@@ -6,7 +6,6 @@ $(document).ready(function () {
             var term = query.term  // Получаем поисковый запрос пользователя
             if (term)
                 term = term.toLowerCase();
-
             for (var i = 0; i < items.length; i++) {
                 var counter = counters[items[i].id] || 0;
                 var dishName = items[i].dish.toLowerCase();

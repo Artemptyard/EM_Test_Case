@@ -1,0 +1,71 @@
+[
+    {
+        "model": "orders_manager.item",
+        "pk": 1,
+        "fields": {
+            "dish": "Пицца",
+            "price": "10.50"
+        }
+    },
+    {
+        "model": "orders_manager.item",
+        "pk": 2,
+        "fields": {
+            "dish": "Карбонара",
+            "price": "12.00"
+        }
+    },
+    {
+        "model": "orders_manager.item",
+        "pk": 3,
+        "fields": {
+            "dish": "Салат Цезарь",
+            "price": "8.50"
+        }
+    },
+    {
+        "model": "orders_manager.order",
+        "pk": 1,
+        "fields": {
+            "table_number": 5,
+            "total_price": "0.00",
+            "status": "в ожидании"
+        }
+    },
+    {
+        "model": "orders_manager.order",
+        "pk": 2,
+        "fields": {
+            "table_number": 3,
+            "total_price": "0.00",
+            "status": "готово"
+        }
+    },
+    {
+        "model": "orders_manager.orderitem",
+        "pk": 1,
+        "fields": {
+            "order": 1,
+            "item": 1,
+            "quantity": 2
+        }
+    },
+    {
+        "model": "orders_manager.orderitem",
+        "pk": 2,
+        "fields": {
+            "order": 1,
+            "item": 3,
+            "quantity": 1
+        }
+    },
+    {
+        "model": "orders_manager.orderitem",
+        "pk": 3,
+        "fields": {
+            "order": 2,
+            "item": 2,
+            "quantity": 1
+        }
+    }
+]

@@ -7,6 +7,46 @@ from django.http import QueryDict
 from .models import Item, OrderStatuses, Order, OrderItem
 from django_select2.forms import ModelSelect2MultipleWidget
 
+from django_select2.forms import ModelSelect2MultipleWidget
+from django.utils.safestring import mark_safe
+from django import forms
+
+
+class MyModelSelect2MultipleWidget(ModelSelect2MultipleWidget):
+    """
+    Custom Select2 multiple widget that allows choosing the same item multiple times
+    and includes a quantity input for each selection.
+    """
+
+    def __init__(self, *args, **kwargs):
+        self.quantity_name = kwargs.pop('quantity_name', 'quantity')
+        super().__init__(*args, **kwargs)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        rendered = super().render(name, value, attrs, renderer)
+        quantity_html = """
+        <script>
+        (function($) {
+            $(document).ready(function() {
+                let selectField = $('#id_%(name)s');
+                selectField.on('select2:select', function(e) {
+                    let selectedOption = e.params.data.id;
+                    let quantityInput = $('<input>')
+                        .attr('type', 'number')
+                        .attr('name', '%(quantity_name)s[' + selectedOption + ']')
+                        .attr('min', '1')
+                        .attr('value', '1')
+                        .addClass('quantity-input');
+
+                    selectField.next('.select2-container').after(quantityInput);
+                });
+            });
+        })
+        </script>
+        """ % {'name': name, 'quantity_name': self.quantity_name}
+
+        return mark_safe(rendered + quantity_html)
+
 
 class AddOrderForm(forms.Form):
     """Создание html формы добавления заказа"""
@@ -19,7 +59,7 @@ class AddOrderForm(forms.Form):
     items = forms.ModelMultipleChoiceField(
         label="Меню",
         queryset=Item.objects.all(),
-        widget=ModelSelect2MultipleWidget(
+        widget=MyModelSelect2MultipleWidget(
             model=Item,
             search_fields=["dish__icontains"],  # Поиск по имени
             attrs={
@@ -36,9 +76,17 @@ class AddOrderForm(forms.Form):
         widget=forms.Select(attrs={"class": "form-control"})
     )
 
+    class Meta:
+        model = OrderItem
+        fields = ['item']
+
     # def __init__(self, items: QuerySet(), *args, **kwargs):
     #     super().__init__(*args, **kwargs)
     #     self.fields['items'].queryset = items
+
+    @classmethod
+    def post_init(cls, data: QueryDict):
+        pass
 
     def save_order(self, items: List[int]):
         """Сохранение данных, полученных из формы в базу данных

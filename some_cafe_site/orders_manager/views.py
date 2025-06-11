@@ -46,6 +46,9 @@ def orders_page(request: WSGIRequest) -> HttpResponse:
     """Страница заказов в кафе"""
     orders = Order.objects.all().order_by("table_number").prefetch_related("items")
     if request.method == "POST":
+        # data = AddOrderForm.process_data(request.POST)
+        print(request.POST)
+        # print(data)
         # form = _add_order(request) if "add_order_form" in request.POST else AddOrderForm()
         # if "add_order_form" in request.POST:
         #     data = AddOrderForm.process_data(request.POST)
@@ -72,6 +75,8 @@ def orders_page(request: WSGIRequest) -> HttpResponse:
     else:
         delete_form = DeleteOrderForm()
         form = AddOrderForm()
+    filter_form = FilterOrdersForm()
+    delete_form = DeleteOrderForm()
     if request.method == "GET":
         filter_form = FilterOrdersForm(request.GET or None)
         if filter_form.is_valid():
@@ -103,9 +108,11 @@ class AddOrder(CreateView):
     def form_valid(self, form):
         """"""
         data = AddOrderForm.process_data(self.request.POST)
+        print(data)
         form = AddOrderForm(data)
         if form.is_valid():
-            form.save_order(data["items"])
+            # form.save_order(data["items"])
+            pass
         return super().form_valid(form)
 
 
